@@ -9879,7 +9879,6 @@ submission.csv  2024-05-10 07:39:40  first raw submission  complete  1.78383    
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>No path specified. Models will be saved in: "AutogluonModels\ag-20240510_171844"
 Presets specified: ['best_quality']
-Presets specified: ['best_quality']
 Setting dynamic_stacking from 'auto' to True. Reason: Enable dynamic_stacking when use_bag_holdout is disabled. (use_bag_holdout=False)
 Stack configuration (auto_stack=True): num_stack_levels=1, num_bag_folds=8, num_bag_sets=1
 Dynamic stacking is enabled (dynamic_stacking=True). AutoGluon will try to determine whether the input data is affected by stacked overfitting and enable or disable stacking as a consequence.
@@ -10660,38 +10659,37 @@ TabularPredictor saved. To load, use: predictor = TabularPredictor.load("Autoglu
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># hyperparameter tunning 2</span>
 <span class="c1"># import autogluon.common as ag</span>
 
-<span class="c1"># gbm_options = {</span>
-<span class="c1">#     "num_boost_round": 100,</span>
-<span class="c1">#     "num_leaves": ag.space.Int(lower=26, upper=66, default=36),</span>
-<span class="c1">#     "min_data_in_leaf": ag.space.Int(lower=20, upper=50, default=30),</span>
-<span class="c1">#     "learning_rate": ag.space.Real(lower=0.01, upper=0.3, default=0.1),</span>
-<span class="c1">#     "feature_fraction": ag.space.Real(lower=0.5, upper=1.0, default=1.0),</span>
-<span class="c1">#     "bagging_fraction": ag.space.Real(lower=0.5, upper=1.0, default=1.0),</span>
-<span class="c1">#     "bagging_freq": ag.space.Int(lower=0, upper=2, default=0),</span>
-<span class="c1">#     "num_threads": 4,</span>
-<span class="c1">#     "num_iterations": 200,</span>
-<span class="c1"># }</span>
+<span class="n">gbm_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"num_boost_round"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">"num_leaves"</span><span class="p">:</span> <span class="n">ag</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">25</span><span class="p">),</span>
+    <span class="s2">"min_data_in_leaf"</span><span class="p">:</span> <span class="n">ag</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+    <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="n">ag</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="c1"># "feature_fraction": ag.space.Real(lower=0.5, upper=1.0, default=1.0),</span>
+    <span class="c1"># "bagging_fraction": ag.space.Real(lower=0.5, upper=1.0, default=1.0),</span>
+    <span class="c1"># "bagging_freq": ag.space.Int(lower=0, upper=2, default=0),</span>
+    <span class="s2">"num_threads"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">"num_iterations"</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+<span class="p">}</span>
 
-<span class="c1"># hyperparameters = {"GBM": gbm_options}</span>
+<span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"GBM"</span><span class="p">:</span> <span class="n">gbm_options</span><span class="p">}</span>
 
-<span class="c1"># hyperparameters_tune_kwargs = {</span>
-<span class="c1">#     "num_trials": 10, </span>
-<span class="c1">#     "searcher": "random",</span>
-<span class="c1">#     "scheduler": "local",</span>
-<span class="c1">#     "resource": {"num_cpus": 2, "num_gpus": 2},</span>
-<span class="c1">#     "time_limits": 600</span>
-<span class="c1">#     }</span>
+<span class="n">hyperparameters_tune_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"num_trials"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> 
+    <span class="s2">"searcher"</span><span class="p">:</span> <span class="s2">"random"</span><span class="p">,</span>
+    <span class="s2">"scheduler"</span><span class="p">:</span> <span class="s2">"local"</span><span class="p">,</span>
+    <span class="s2">"resource"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"num_cpus"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"num_gpus"</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="p">}</span>
 
 
-<span class="c1"># predictor_new_hpo = TabularPredictor(</span>
-<span class="c1">#         label="count", </span>
-<span class="c1">#         eval_metric="root_mean_squared_error"</span>
-<span class="c1">#     ).fit(</span>
-<span class="c1">#         train_data=train_data, </span>
-<span class="c1">#         time_limit=time_limit, </span>
-<span class="c1">#         presets="best_quality", </span>
-<span class="c1">#         hyperparameters=hyperparameters, </span>
-<span class="c1">#         hyperparameter_tune_kwargs=hyperparameters_tune_kwargs)</span>
+<span class="n">predictor_new_hpo</span> <span class="o">=</span> <span class="n">TabularPredictor</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">"count"</span><span class="p">,</span> 
+        <span class="n">eval_metric</span><span class="o">=</span><span class="s2">"root_mean_squared_error"</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">train_data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> 
+        <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span> 
+        <span class="n">presets</span><span class="o">=</span><span class="s2">"best_quality"</span><span class="p">,</span> 
+        <span class="n">hyperparameters</span><span class="o">=</span><span class="n">hyperparameters</span><span class="p">,</span> 
+        <span class="n">hyperparameter_tune_kwargs</span><span class="o">=</span><span class="n">hyperparameters_tune_kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -10704,7 +10702,7 @@ TabularPredictor saved. To load, use: predictor = TabularPredictor.load("Autoglu
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>No path specified. Models will be saved in: "AutogluonModels\ag-20240510_193635"
+<pre>No path specified. Models will be saved in: "AutogluonModels\ag-20240510_204855"
 Presets specified: ['best_quality']
 Warning: hyperparameter tuning is currently experimental and may cause the process to hang.
 Setting dynamic_stacking from 'auto' to True. Reason: Enable dynamic_stacking when use_bag_holdout is disabled. (use_bag_holdout=False)
@@ -10712,13 +10710,13 @@ Stack configuration (auto_stack=True): num_stack_levels=1, num_bag_folds=8, num_
 Dynamic stacking is enabled (dynamic_stacking=True). AutoGluon will try to determine whether the input data is affected by stacked overfitting and enable or disable stacking as a consequence.
 Detecting stacked overfitting by sub-fitting AutoGluon on the input data. That is, copies of AutoGluon will be sub-fit on subset(s) of the data. Then, the holdout validation data is used to detect stacked overfitting.
 Sub-fit(s) time limit is: 600 seconds.
-Starting holdout-based sub-fit for dynamic stacking. Context path is: AutogluonModels\ag-20240510_193635\ds_sub_fit\sub_fit_ho.
+Starting holdout-based sub-fit for dynamic stacking. Context path is: AutogluonModels\ag-20240510_204855\ds_sub_fit\sub_fit_ho.
 Running the sub-fit in a ray process to avoid memory leakage.
-Spend 150 seconds for the sub-fit(s) during dynamic stacking.
-Time left for full fit of AutoGluon: 450 seconds.
+Spend 130 seconds for the sub-fit(s) during dynamic stacking.
+Time left for full fit of AutoGluon: 470 seconds.
 Starting full fit now with num_stack_levels 1.
-Beginning AutoGluon training ... Time limit = 450s
-AutoGluon will save models to "AutogluonModels\ag-20240510_193635"
+Beginning AutoGluon training ... Time limit = 470s
+AutoGluon will save models to "AutogluonModels\ag-20240510_204855"
 =================== System Info ===================
 AutoGluon Version:  1.1.0
 Python Version:     3.11.9
@@ -10726,8 +10724,8 @@ Operating System:   Windows
 Platform Machine:   AMD64
 Platform Version:   10.0.22631
 CPU Count:          8
-Memory Avail:       17.64 GB / 31.89 GB (55.3%)
-Disk Space Avail:   278.13 GB / 499.89 GB (55.6%)
+Memory Avail:       15.95 GB / 31.89 GB (50.0%)
+Disk Space Avail:   277.36 GB / 499.89 GB (55.5%)
 ===================================================
 Train Data Rows:    10886
 Train Data Columns: 10
@@ -10736,7 +10734,7 @@ Problem Type:       regression
 Preprocessing data ...
 Using Feature Generators to preprocess the data ...
 Fitting AutoMLPipelineFeatureGenerator...
-	Available Memory:                    18055.58 MB
+	Available Memory:                    16333.26 MB
 	Train Data (Original)  Memory Usage: 0.64 MB (0.0% of available memory)
 	Inferring data type of each feature based on column values. Set feature_metadata_in to manually specify special dtypes of the features.
 	Stage 1 Generators:
@@ -10764,20 +10762,20 @@ Fitting AutoMLPipelineFeatureGenerator...
 		('int', [])                  : 2 | ['humidity', 'hour']
 		('int', ['bool'])            : 2 | ['holiday', 'workingday']
 		('int', ['datetime_as_int']) : 5 | ['datetime', 'datetime.year', 'datetime.month', 'datetime.day', 'datetime.dayofweek']
-	0.2s = Fit runtime
+	0.3s = Fit runtime
 	10 features in original data used to generate 14 features in processed data.
 	Train Data (Processed) Memory Usage: 0.83 MB (0.0% of available memory)
-Data preprocessing and feature engineering runtime = 0.22s ...
+Data preprocessing and feature engineering runtime = 0.32s ...
 AutoGluon will gauge predictive performance using evaluation metric: 'root_mean_squared_error'
 	This metric's sign has been flipped to adhere to being higher_is_better. The metric score can be multiplied by -1 to get the metric value.
 	To change this, specify the eval_metric parameter of Predictor()
 User-specified model hyperparameters to be fit:
 {
-	'GBM': {'num_boost_round': 100, 'num_leaves': Int: lower=26, upper=66, 'min_data_in_leaf': Int: lower=20, upper=50, 'learning_rate': Real: lower=0.01, upper=0.3, 'feature_fraction': Real: lower=0.5, upper=1.0, 'bagging_fraction': Real: lower=0.5, upper=1.0, 'bagging_freq': Int: lower=0, upper=2, 'num_threads': 4, 'num_iterations': 200},
+	'GBM': {'num_boost_round': 100, 'num_leaves': Int: lower=20, upper=100, 'min_data_in_leaf': Int: lower=20, upper=50, 'learning_rate': Real: lower=0.01, upper=0.3, 'num_threads': 4, 'num_iterations': 300},
 }
 AutoGluon will fit 2 stack levels (L1 to L2) ...
 Fitting 1 L1 models ...
-Hyperparameter tuning model: LightGBM_BAG_L1 ... Tuning model for up to 269.79s of the 449.77s of remaining time.
+Hyperparameter tuning model: LightGBM_BAG_L1 ... Tuning model for up to 281.74s of the 469.67s of remaining time.
 </pre>
 </div>
 </div>
@@ -10791,62 +10789,63 @@ Hyperparameter tuning model: LightGBM_BAG_L1 ... Tuning model for up to 269.79s 
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.08%)
 	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.06%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.04%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
 	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.06%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.08%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.06%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.08%)
 	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.05%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.04%)
+	Stopping HPO to satisfy time limit...
 Fitted model: LightGBM_BAG_L1\T1 ...
-	-35.4306	 = Validation score   (-root_mean_squared_error)
-	10.87s	 = Training   runtime
+	-35.4863	 = Validation score   (-root_mean_squared_error)
+	23.04s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T2 ...
-	-36.4301	 = Validation score   (-root_mean_squared_error)
-	11.53s	 = Training   runtime
+	-35.1521	 = Validation score   (-root_mean_squared_error)
+	26.73s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T3 ...
-	-36.1456	 = Validation score   (-root_mean_squared_error)
-	13.23s	 = Training   runtime
+	-34.8354	 = Validation score   (-root_mean_squared_error)
+	23.26s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T4 ...
-	-35.086	 = Validation score   (-root_mean_squared_error)
-	12.86s	 = Training   runtime
+	-35.3394	 = Validation score   (-root_mean_squared_error)
+	23.66s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T5 ...
-	-54.652	 = Validation score   (-root_mean_squared_error)
-	10.96s	 = Training   runtime
+	-35.2462	 = Validation score   (-root_mean_squared_error)
+	28.42s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T6 ...
-	-35.4333	 = Validation score   (-root_mean_squared_error)
-	11.97s	 = Training   runtime
+	-34.1485	 = Validation score   (-root_mean_squared_error)
+	30.05s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T7 ...
-	-34.9919	 = Validation score   (-root_mean_squared_error)
-	13.64s	 = Training   runtime
+	-34.7179	 = Validation score   (-root_mean_squared_error)
+	30.39s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T8 ...
-	-35.5813	 = Validation score   (-root_mean_squared_error)
-	11.89s	 = Training   runtime
+	-35.1803	 = Validation score   (-root_mean_squared_error)
+	25.15s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T9 ...
-	-37.039	 = Validation score   (-root_mean_squared_error)
-	12.09s	 = Training   runtime
+	-34.1705	 = Validation score   (-root_mean_squared_error)
+	29.94s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L1\T10 ...
-	-36.2281	 = Validation score   (-root_mean_squared_error)
-	11.2s	 = Training   runtime
+	-35.6799	 = Validation score   (-root_mean_squared_error)
+	20.14s	 = Training   runtime
 	0.0s	 = Validation runtime
-Fitting model: WeightedEnsemble_L2 ... Training model for up to 360.0s of the 328.97s of remaining time.
-	Ensemble Weights: {'LightGBM_BAG_L1\T7': 0.263, 'LightGBM_BAG_L1\T4': 0.211, 'LightGBM_BAG_L1\T6': 0.211, 'LightGBM_BAG_L1\T1': 0.158, 'LightGBM_BAG_L1\T8': 0.158}
-	-33.6765	 = Validation score   (-root_mean_squared_error)
-	0.05s	 = Training   runtime
+Fitting model: WeightedEnsemble_L2 ... Training model for up to 360.0s of the 208.29s of remaining time.
+	Ensemble Weights: {'LightGBM_BAG_L1\T9': 0.3, 'LightGBM_BAG_L1\T2': 0.2, 'LightGBM_BAG_L1\T6': 0.2, 'LightGBM_BAG_L1\T7': 0.2, 'LightGBM_BAG_L1\T3': 0.1}
+	-33.246	 = Validation score   (-root_mean_squared_error)
+	0.07s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitting 1 L2 models ...
-Hyperparameter tuning model: LightGBM_BAG_L2 ... Tuning model for up to 296.0s of the 328.87s of remaining time.
+Hyperparameter tuning model: LightGBM_BAG_L2 ... Tuning model for up to 187.35s of the 208.14s of remaining time.
 </pre>
 </div>
 </div>
@@ -10860,62 +10859,48 @@ Hyperparameter tuning model: LightGBM_BAG_L2 ... Tuning model for up to 296.0s o
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.09%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.07%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.09%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.09%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.09%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.08%)
-	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.06%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.12%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.10%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.12%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.10%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.13%)
+	Fitting 8 child models (S1F1 - S1F8) | Fitting with ParallelLocalFoldFittingStrategy (8 workers, per: cpus=1, gpus=0, memory=0.12%)
+	Stopping HPO to satisfy time limit...
 Fitted model: LightGBM_BAG_L2\T1 ...
-	-34.2691	 = Validation score   (-root_mean_squared_error)
-	11.44s	 = Training   runtime
+	-33.8899	 = Validation score   (-root_mean_squared_error)
+	19.04s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T2 ...
-	-34.4202	 = Validation score   (-root_mean_squared_error)
-	11.89s	 = Training   runtime
+	-34.6421	 = Validation score   (-root_mean_squared_error)
+	27.61s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T3 ...
-	-34.3618	 = Validation score   (-root_mean_squared_error)
-	12.23s	 = Training   runtime
+	-34.143	 = Validation score   (-root_mean_squared_error)
+	25.59s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T4 ...
-	-34.4513	 = Validation score   (-root_mean_squared_error)
-	13.49s	 = Training   runtime
+	-34.0783	 = Validation score   (-root_mean_squared_error)
+	24.63s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T5 ...
-	-34.6704	 = Validation score   (-root_mean_squared_error)
-	12.17s	 = Training   runtime
+	-34.2076	 = Validation score   (-root_mean_squared_error)
+	26.39s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T6 ...
-	-34.6028	 = Validation score   (-root_mean_squared_error)
-	11.52s	 = Training   runtime
+	-34.105	 = Validation score   (-root_mean_squared_error)
+	29.05s	 = Training   runtime
 	0.0s	 = Validation runtime
 Fitted model: LightGBM_BAG_L2\T7 ...
-	-34.4593	 = Validation score   (-root_mean_squared_error)
-	14.82s	 = Training   runtime
+	-34.2385	 = Validation score   (-root_mean_squared_error)
+	31.9s	 = Training   runtime
 	0.0s	 = Validation runtime
-Fitted model: LightGBM_BAG_L2\T8 ...
-	-34.2649	 = Validation score   (-root_mean_squared_error)
-	11.71s	 = Training   runtime
+Fitting model: WeightedEnsemble_L3 ... Training model for up to 360.0s of the 23.44s of remaining time.
+	Ensemble Weights: {'LightGBM_BAG_L1\T6': 0.417, 'LightGBM_BAG_L2\T1': 0.25, 'LightGBM_BAG_L2\T6': 0.25, 'LightGBM_BAG_L2\T3': 0.083}
+	-33.4759	 = Validation score   (-root_mean_squared_error)
+	0.07s	 = Training   runtime
 	0.0s	 = Validation runtime
-Fitted model: LightGBM_BAG_L2\T9 ...
-	-34.1301	 = Validation score   (-root_mean_squared_error)
-	12.27s	 = Training   runtime
-	0.0s	 = Validation runtime
-Fitted model: LightGBM_BAG_L2\T10 ...
-	-34.152	 = Validation score   (-root_mean_squared_error)
-	10.55s	 = Training   runtime
-	0.0s	 = Validation runtime
-Fitting model: WeightedEnsemble_L3 ... Training model for up to 360.0s of the 206.18s of remaining time.
-	Ensemble Weights: {'LightGBM_BAG_L2\T10': 0.4, 'LightGBM_BAG_L2\T9': 0.333, 'LightGBM_BAG_L2\T3': 0.267}
-	-34.0032	 = Validation score   (-root_mean_squared_error)
-	0.05s	 = Training   runtime
-	0.0s	 = Validation runtime
-AutoGluon training complete, total runtime = 243.92s ... Best model: "WeightedEnsemble_L2"
-TabularPredictor saved. To load, use: predictor = TabularPredictor.load("AutogluonModels\ag-20240510_193635")
+AutoGluon training complete, total runtime = 446.68s ... Best model: "WeightedEnsemble_L2"
+TabularPredictor saved. To load, use: predictor = TabularPredictor.load("AutogluonModels\ag-20240510_204855")
 </pre>
 </div>
 </div>
@@ -10945,20 +10930,29 @@ TabularPredictor saved. To load, use: predictor = TabularPredictor.load("Autoglu
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>*** Summary of fit() ***
 Estimated performance of each model:
-                 model  score_val              eval_metric  pred_time_val    fit_time  pred_time_val_marginal  fit_time_marginal  stack_level  can_infer  fit_order
-0  WeightedEnsemble_L3 -32.149810  root_mean_squared_error      54.265421  335.360572                0.002017           0.081148            3       True         10
-1      CatBoost_BAG_L2 -32.403079  root_mean_squared_error      54.082136  328.967190                0.198314          79.691966            2       True          8
-2  WeightedEnsemble_L2 -32.419782  root_mean_squared_error      53.887349  249.371688                0.003527           0.096464            2       True          5
-3      LightGBM_BAG_L2 -32.612483  root_mean_squared_error      54.065090  255.587459                0.181268           6.312235            2       True          6
-4       XGBoost_BAG_L2 -33.080043  root_mean_squared_error      54.235691  260.700673                0.351869          11.425449            2       True          9
-5    LightGBMXT_BAG_L2 -33.393086  root_mean_squared_error      54.281207  255.621755                0.397385           6.346531            2       True          7
-6      LightGBM_BAG_L1 -33.919639  root_mean_squared_error       6.323834   13.095481                6.323834          13.095481            1       True          1
-7    LightGBMXT_BAG_L1 -34.457274  root_mean_squared_error      39.286901   52.064159               39.286901          52.064159            1       True          2
-8       XGBoost_BAG_L1 -34.603186  root_mean_squared_error       7.399232   23.512679                7.399232          23.512679            1       True          4
-9      CatBoost_BAG_L1 -35.790057  root_mean_squared_error       0.873855  160.602906                0.873855         160.602906            1       True          3
-Number of models trained: 10
+                  model  score_val              eval_metric  pred_time_val    fit_time  pred_time_val_marginal  fit_time_marginal  stack_level  can_infer  fit_order
+0   WeightedEnsemble_L2 -33.245990  root_mean_squared_error       0.002108  140.442667                0.001110           0.072465            2       True         11
+1   WeightedEnsemble_L3 -33.475900  root_mean_squared_error       0.005018  334.534778                0.001012           0.065628            3       True         19
+2    LightGBM_BAG_L2\T1 -33.889904  root_mean_squared_error       0.004006  279.823887                0.000000          19.042499            2       True         12
+3    LightGBM_BAG_L2\T4 -34.078257  root_mean_squared_error       0.004006  285.411163                0.000000          24.629775            2       True         15
+4    LightGBM_BAG_L2\T6 -34.105002  root_mean_squared_error       0.004006  289.833747                0.000000          29.052359            2       True         17
+5    LightGBM_BAG_L2\T3 -34.143002  root_mean_squared_error       0.004006  286.374291                0.000000          25.592903            2       True         14
+6    LightGBM_BAG_L1\T6 -34.148527  root_mean_squared_error       0.000998   30.047295                0.000998          30.047295            1       True          6
+7    LightGBM_BAG_L1\T9 -34.170494  root_mean_squared_error       0.000000   29.935349                0.000000          29.935349            1       True          9
+8    LightGBM_BAG_L2\T5 -34.207642  root_mean_squared_error       0.004006  287.172216                0.000000          26.390828            2       True         16
+9    LightGBM_BAG_L2\T7 -34.238467  root_mean_squared_error       0.004006  292.684779                0.000000          31.903392            2       True         18
+10   LightGBM_BAG_L2\T2 -34.642114  root_mean_squared_error       0.004006  288.393295                0.000000          27.611907            2       True         13
+11   LightGBM_BAG_L1\T7 -34.717864  root_mean_squared_error       0.000000   30.392815                0.000000          30.392815            1       True          7
+12   LightGBM_BAG_L1\T3 -34.835416  root_mean_squared_error       0.000000   23.263961                0.000000          23.263961            1       True          3
+13   LightGBM_BAG_L1\T2 -35.152108  root_mean_squared_error       0.000000   26.730782                0.000000          26.730782            1       True          2
+14   LightGBM_BAG_L1\T8 -35.180317  root_mean_squared_error       0.000000   25.145068                0.000000          25.145068            1       True          8
+15   LightGBM_BAG_L1\T5 -35.246181  root_mean_squared_error       0.000000   28.422771                0.000000          28.422771            1       True          5
+16   LightGBM_BAG_L1\T4 -35.339440  root_mean_squared_error       0.000999   23.663650                0.000999          23.663650            1       True          4
+17   LightGBM_BAG_L1\T1 -35.486285  root_mean_squared_error       0.001002   23.037407                0.001002          23.037407            1       True          1
+18  LightGBM_BAG_L1\T10 -35.679911  root_mean_squared_error       0.001007   20.142290                0.001007          20.142290            1       True         10
+Number of models trained: 19
 Types of models trained:
-{'StackerEnsembleModel_LGB', 'StackerEnsembleModel_XGBoost', 'StackerEnsembleModel_CatBoost', 'WeightedEnsembleModel'}
+{'StackerEnsembleModel_LGB', 'WeightedEnsembleModel'}
 Bagging used: True  (with 8 folds)
 Multi-layer stack-ensembling used: True  (with 3 levels)
 Feature Metadata (Processed):
@@ -10983,16 +10977,25 @@ Feature Metadata (Processed):
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'LightGBM_BAG_L1': -33.919639163586254,
- 'LightGBMXT_BAG_L1': -34.457273921492806,
- 'CatBoost_BAG_L1': -35.79005720459372,
- 'XGBoost_BAG_L1': -34.603185627841,
- 'WeightedEnsemble_L2': -32.41978184396998,
- 'LightGBM_BAG_L2': -32.61248290038801,
- 'LightGBMXT_BAG_L2': -33.39308602427652,
- 'CatBoost_BAG_L2': -32.40307906392939,
- 'XGBoost_BAG_L2': -33.08004333870998,
- 'WeightedEnsemble_L3': -32.1498098937051}</pre>
+<pre>{'LightGBM_BAG_L1\\T1': -35.48628480359431,
+ 'LightGBM_BAG_L1\\T2': -35.15210803486983,
+ 'LightGBM_BAG_L1\\T3': -34.83541571303753,
+ 'LightGBM_BAG_L1\\T4': -35.33943998615531,
+ 'LightGBM_BAG_L1\\T5': -35.246180911232884,
+ 'LightGBM_BAG_L1\\T6': -34.148527365651574,
+ 'LightGBM_BAG_L1\\T7': -34.71786382794446,
+ 'LightGBM_BAG_L1\\T8': -35.180316976118384,
+ 'LightGBM_BAG_L1\\T9': -34.17049397898051,
+ 'LightGBM_BAG_L1\\T10': -35.67991096220428,
+ 'WeightedEnsemble_L2': -33.2459895686044,
+ 'LightGBM_BAG_L2\\T1': -33.889903984695565,
+ 'LightGBM_BAG_L2\\T2': -34.64211428072044,
+ 'LightGBM_BAG_L2\\T3': -34.14300208137091,
+ 'LightGBM_BAG_L2\\T4': -34.078257161884665,
+ 'LightGBM_BAG_L2\\T5': -34.20764174148339,
+ 'LightGBM_BAG_L2\\T6': -34.10500166154215,
+ 'LightGBM_BAG_L2\\T7': -34.23846733530166,
+ 'WeightedEnsemble_L3': -33.4759003094543}</pre>
 </div>
 </div>
 </div>
@@ -11211,7 +11214,7 @@ submission.csv               2024-05-10 07:39:40  first raw submission          
 <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s2">"model"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"initial"</span><span class="p">,</span> <span class="s2">"add_features"</span><span class="p">,</span> <span class="s2">"hpo"</span><span class="p">],</span>
     <span class="s2">"LightGBM_BAG_L2"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">54.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">30.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">32.6</span><span class="p">],</span>
-    <span class="s2">"LightGBMXT_BAG_L2"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">131.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">33.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">33.9</span><span class="p">],</span>
+    <span class="s2">"LightGBM_BAG_L1"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">131.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">33.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">33.9</span><span class="p">],</span>
     <span class="s2">"LightGBMXT_BAG_L2"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">60.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">31.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">33.3</span><span class="p">],</span>
     <span class="s2">"score"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.73</span><span class="p">,</span> <span class="mf">0.63</span><span class="p">,</span> <span class="mf">0.48</span><span class="p">]</span>
 <span class="p">})</span>
@@ -11247,6 +11250,7 @@ submission.csv               2024-05-10 07:39:40  first raw submission          
 <th></th>
 <th>model</th>
 <th>LightGBM_BAG_L2</th>
+<th>LightGBM_BAG_L1</th>
 <th>LightGBMXT_BAG_L2</th>
 <th>score</th>
 </tr>
@@ -11256,6 +11260,7 @@ submission.csv               2024-05-10 07:39:40  first raw submission          
 <th>0</th>
 <td>initial</td>
 <td>-54.8</td>
+<td>-131.0</td>
 <td>-60.5</td>
 <td>1.73</td>
 </tr>
@@ -11263,6 +11268,7 @@ submission.csv               2024-05-10 07:39:40  first raw submission          
 <th>1</th>
 <td>add_features</td>
 <td>-30.8</td>
+<td>-33.9</td>
 <td>-31.0</td>
 <td>0.63</td>
 </tr>
@@ -11270,6 +11276,7 @@ submission.csv               2024-05-10 07:39:40  first raw submission          
 <th>2</th>
 <td>hpo</td>
 <td>-32.6</td>
+<td>-33.9</td>
 <td>-33.3</td>
 <td>0.48</td>
 </tr>
